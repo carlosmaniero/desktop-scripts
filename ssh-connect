@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+show(){
+    echo 'HOSTS disponíveis:'
+    ls "$HOME/servers" | grep '^ssh-.*\.sh$' | sed 's/ssh-//g' | sed 's/.sh//g'
+}
+
+if [ -z "$1" ];
+then
+    show
+    read -p "Escolha um dos hosts acima: " host
+else
+    host=$1
+fi
+
+COMMAND="$HOME/servers/ssh-$host.sh"
+
+if [ -f $COMMAND ];
+then
+    echo "Daóra: Aê maluco vou conectar ao servidor $host fica ligado"
+    sh $COMMAND
+else
+    echo "Ô Seu babaca! Essa porra não existe!"
+    echo "Dá uma olhada se é algum desses aqui que você quer:"
+    echo ""
+    echo ""
+    echo "Senão, só lamento. "
+fi
+
+echo ""
+echo "Vlw! Flw!"

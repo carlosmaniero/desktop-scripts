@@ -1,0 +1,6 @@
+#/usr/bin/env bash
+i3-msg "workspace 3; append_layout ~/.i3/workspace-3.json"
+
+urxvt -e bash -c "rainbowstream &"
+urxvt -e bash -c "profanity -a carlos.maniero@chat.facebook.com" &
+urxvt -e bash -c "profanity -a carlosmaniero@gmail.com" &
