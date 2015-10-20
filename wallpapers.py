@@ -13,12 +13,13 @@ class WallpaperControl(object):
     folder = '/home/carlos/wallpapers/'
     cache = os.path.join(folder, '.cache')
     time = 15
-    darken = 0.2
+    darken = 0.25
     files = []
 
-    def __init__(self):
+    def __init__(self, time=3):
         if not os.path.isdir(self.cache):
             os.mkdir(self.cache)
+        self.time = time
 
     def loop(self):
         self.update_files()
@@ -52,16 +53,12 @@ class WallpaperControl(object):
 
         if not os.path.exists(cached):
             im = Image.open(filename)
-            im = ImageEnhance.Contrast(im)
-            im = im.enhance(0.8)
             im = ImageEnhance.Color(im)
-            im = im.enhance(0.5)
-            im = ImageEnhance.Brightness(im)
-            im = im.enhance(self.darken)
-            overlay = Image.new(im.mode, im.size, '#005e5f')
+            im = im.enhance(0.75)
+            overlay = Image.new(im.mode, im.size, '#2C888C')
             im = Image.blend(im, overlay, 0.45)
             im = ImageEnhance.Brightness(im)
-            im = im.enhance(0.7)
+            im = im.enhance(self.darken)
             im.save(cached)
 
             del im

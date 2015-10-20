@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+show(){
+    echo 'Máquinas virtuais:'
+    VBoxManage list vms
+}
+
+if [ -z "$1" ];
+then
+    show
+    read -p "Escolha um dos host acima: " vm
+else
+    vm=$1
+fi
+
+VBoxManage startvm $vm --type headless
+ssh -p 2020 pythonildo@localhost

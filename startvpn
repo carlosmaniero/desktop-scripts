@@ -1,0 +1,3 @@
+cat ~/openvpn
+cd /etc/openvpn/
+sudo openvpn --config gambit-udp-1194.ovpn --script-security 3
