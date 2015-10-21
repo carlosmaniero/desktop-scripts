@@ -1,7 +1,13 @@
+# Virtual env options
+export VIRTUAL_ENV_DISABLE_PROMPT=1
 export WORKON_HOME=~/Envs
 mkdir -p $WORKON_HOME
 source /usr/local/bin/virtualenvwrapper.sh
+
+# Scripts
 PATH="$PATH:/home/carlos/scripts/"
+
+# Set default option
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
@@ -12,7 +18,7 @@ function parse_git_branch() {
     if [ ! "${BRANCH}" == "" ]
     then
         STAT=`parse_git_dirty`
-        echo "[⑃ ${BRANCH}${STAT}]"
+        echo " ⑃ ${BRANCH}${STAT} "
     else
         echo ""
     fi
@@ -53,4 +59,17 @@ function parse_git_dirty {
     fi
 }
 
-export PS1="\`parse_git_branch\`$PS1"
+ORIGINAL_PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] "
+GIT_PS1="\[$(tput bold)\]\[\033[48;5;8m\]\`parse_git_branch\`\[$(tput sgr0)\]"
+COMUNIST_PS1="\[\e[31;47m\]☭\[\e[m\]\[\e[47m\] \[\e[m\]"
+export ENV_PS1=""
+function show_env {
+    if [[ -z "$VIRTUAL_ENV" ]] ; then
+        export ENV_PS1=""
+    else
+        export ENV_PS1="\[$(tput bold)\]\[\e[37;41m\] `basename $VIRTUAL_ENV` \[\e[m\]\[$(tput sgr0)\]"
+    fi
+    export PS1="$COMUNIST_PS1$GIT_PS1$ENV_PS1 $ORIGINAL_PS1"
+}
+
+export PROMPT_COMMAND=show_env
