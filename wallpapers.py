@@ -16,10 +16,9 @@ class WallpaperControl(object):
     darken = 0.25
     files = []
 
-    def __init__(self, time=3):
+    def __init__(self):
         if not os.path.isdir(self.cache):
             os.mkdir(self.cache)
-        self.time = time
 
     def loop(self):
         self.update_files()
