@@ -2,12 +2,13 @@
 # coding: utf-8
 from time import sleep
 import subprocess
+import gc
 
 batery = '/proc/acpi/battery/BAT0/'
 state = batery + 'state'
 info = batery + 'info'
-alerts = range(1, 15)
-alerts += range(20, 35, 5)
+alerts = range(1, 16)
+alerts += range(20, 36, 5)
 alerted = []
 process = None
 
@@ -23,10 +24,17 @@ def to_dict(f, obj={}):
     return obj
 
 
+def kill_process():
+    global process
+    if process:
+        process.kill()
+        process = None
+        gc.collect()
+
+
 def check_loop():
     global process
     try:
-
         while True:
             with open(state) as state_file:
                 obj = to_dict(state_file)
@@ -37,8 +45,7 @@ def check_loop():
             if obj['charging_state'] == 'charging':
                 while alerted:
                     alerted.pop()
-                if process:
-                    process.kill()
+                kill_process()
             else:
                 total = (
                     obj['remaining_capacity'] / float(obj['design_capacity'])
@@ -50,6 +57,8 @@ def check_loop():
                         for j in alerts:
                             if j > i:
                                 alerted.append(j)
+
+                        kill_process()
                         process = subprocess.Popen([
                             'i3-nagbar',
                             '-m',
@@ -57,7 +66,7 @@ def check_loop():
                         ])
                         break
 
-                sleep(0.1)
+            sleep(1)
     except KeyboardInterrupt:
         print('')
         print('Bye bye')
