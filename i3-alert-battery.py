@@ -11,6 +11,7 @@ alerts = range(1, 16)
 alerts += range(20, 36, 5)
 alerted = []
 process = None
+process_charging = None
 
 
 def to_dict(f, obj={}):
@@ -32,8 +33,21 @@ def kill_process():
         gc.collect()
 
 
+def kill_process_charging():
+    global process_charging
+    if process_charging:
+        process_charging.kill()
+        process_charging = None
+        gc.collect()
+
+
 def check_loop():
     global process
+    global process_charging
+
+    first = True
+    is_charging = True
+
     try:
         while True:
             with open(state) as state_file:
@@ -42,11 +56,27 @@ def check_loop():
             with open(info) as info_file:
                 obj = to_dict(info_file, obj)
 
-            if obj['charging_state'] == 'charging':
+            if first:
+                first = False
+                is_charging = obj['charging_state'] in ('charging', 'charged')
+
+            if is_charging and obj['charging_state'] not in ('charging', 'charged'):
+                process_charging = subprocess.Popen([
+                    'i3-nagbar',
+                    '-m',
+                    'Carregador desconectado',
+                    '-t',
+                    'warning'
+                ])
+
+            if obj['charging_state'] in ('charging', 'charged'):
                 while alerted:
                     alerted.pop()
                 kill_process()
+                kill_process_charging()
+                is_charging = True
             else:
+                is_charging = False
                 total = (
                     obj['remaining_capacity'] / float(obj['design_capacity'])
                 ) * 100
