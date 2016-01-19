@@ -4,6 +4,9 @@ export WORKON_HOME=~/Envs
 mkdir -p $WORKON_HOME
 source /usr/local/bin/virtualenvwrapper.sh
 
+# Django autocomplete
+source $HOME/.django_bash_completion.sh
+
 # Scripts
 PATH="$PATH:/home/carlos/scripts/"
 
@@ -73,3 +76,13 @@ function show_env {
 }
 
 export PROMPT_COMMAND=show_env
+
+eval "$(thefuck --alias)"
+# You can use whatever you want as an alias, like for Mondays:
+eval "$(thefuck --alias FUCK)"
+
+
+alias editor=$EDITOR
+alias e=$EDITOR
+alias manage=./manage.py
+alias pyclean='find . -name "*.pyc" -exec rm -rf {} \;'

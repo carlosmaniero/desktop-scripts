@@ -55,6 +55,7 @@ class WallpaperControl(object):
             im = ImageEnhance.Color(im)
             im = im.enhance(0.75)
             overlay = Image.new(im.mode, im.size, '#2C888C')
+            overlay = Image.new(im.mode, im.size, '#000000')
             im = Image.blend(im, overlay, 0.45)
             im = ImageEnhance.Brightness(im)
             im = im.enhance(self.darken)
