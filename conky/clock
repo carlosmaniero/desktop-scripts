@@ -1,0 +1,33 @@
+use_xft yes
+own_window yes
+own_window_type panel
+own_window_transparent yes
+own_window_class conky
+own_window_argb_visual yes
+double_buffer yes
+border_inner_margin 0
+border_outer_margin 0
+background no
+xftfont Ubuntu Mono derivative Powerline:size=9
+xftalpha 0.8
+update_interval 1
+total_run_times 0
+#own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+minimum_size 130 
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+default_color #FFEF9F
+default_shade_color black
+alignment bottom_middle
+gap_x 1
+gap_y 0
+no_buffers yes
+override_utf8_locale no
+uppercase no
+
+TEXT
+${font Ubuntu:size=12}$alignc${time %H:%M}${font}
+${font Ubuntu:size=8}${execpi 0.5 python3 /home/carlos/scripts/current_workspace.py}$alignc${time %a %b %d %Y}$font

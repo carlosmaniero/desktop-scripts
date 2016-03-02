@@ -1,0 +1,79 @@
+alignment top_right
+use_xft yes
+own_window yes
+own_window_type override
+own_window_transparent yes
+own_window_class conky
+own_window_argb_visual yes
+double_buffer yes
+border_inner_margin 0
+border_outer_margin 0
+background no
+xftfont Ubuntu Mono derivative Powerline:size=9
+xftalpha 0.8
+update_interval 1
+total_run_times 0
+own_window yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+minimum_size 220 5
+maximum_width 200
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders yes
+default_color #FFEF9F
+default_shade_color black
+alignment top_right
+gap_x 1
+gap_y 1
+no_buffers yes
+cpu_avg_samples 4
+override_utf8_locale no
+uppercase no
+
+TEXT
+$stippled_hr
+GARFO
+$stippled_hr
+Kernel: $alignr $kernel
+Uptime: $alignr $uptime
+Machine: $alignr $machine
+
+$stippled_hr
+SYSTEM
+$stippled_hr
+CPU: $alignr${cpu cpu1}%    ${cpu cpu2}%    ${cpu cpu3}%    ${cpu cpu4}%
+${cpugraph 20}
+Load: $alignr $loadavg
+Processes: $alignr $processes
+Running: $alignr $running_processes
+RAM: $alignr $mem/$memmax
+${membar 3}
+Swap: $alignr $swap / $swapmax
+${swapbar 3}
+
+$stippled_hr
+BATTERY
+$stippled_hr
+${acpiacadapter}$alignr ${battery_time}     ${battery_percent BAT0}%
+${battery_bar}${battery_percent BAT0}%
+
+$stippled_hr
+TOP CPU
+$stippled_hr
+Name $alignr CPU%   MEM%
+${color #ff0000}${top name 1} $alignr ${top cpu 1} ${top mem 1}$color
+${top name 2} $alignr ${top cpu 2} ${top mem 2}
+${top name 3} $alignr ${top cpu 3} ${top mem 3}
+
+$stippled_hr
+TOP MEM
+$stippled_hr
+Name $alignr CPU%   MEM%
+${color #ff0000}${top_mem name 1} $alignr ${top_mem cpu 1} ${top_mem mem 1}$color
+${top_mem name 2} $alignr ${top_mem cpu 2} ${top_mem mem 2}
+${top_mem name 3} $alignr ${top_mem cpu 3} ${top_mem mem 3}
+
+
+${execi 1 cat /tmp/spotify-music}
