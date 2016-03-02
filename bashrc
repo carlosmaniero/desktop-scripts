@@ -86,3 +86,5 @@ alias editor=$EDITOR
 alias e=$EDITOR
 alias manage=./manage.py
 alias pyclean='find . -name "*.pyc" -exec rm -rf {} \;'
+
+export LINE_PATH=/home/carlos/Projetos/line/
